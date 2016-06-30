@@ -22,6 +22,7 @@ public class MsgSubscriberTwo {
 	MessageConsumer messageConsumer;
 
 	public MsgSubscriberTwo() throws NamingException, JMSException {
+		
 		Properties properties = new Properties();
 		properties.setProperty(Context.INITIAL_CONTEXT_FACTORY,
 				"org.jboss.naming.remote.client.InitialContextFactory");
@@ -30,10 +31,13 @@ public class MsgSubscriberTwo {
 		properties.put(Context.SECURITY_PRINCIPAL, "user");
 		properties.put(Context.SECURITY_CREDENTIALS, "kolkata");
 		InitialContext initialContext = new InitialContext(properties);
+		
 		this.connectionFactory = (ConnectionFactory) initialContext
 				.lookup("jms/RemoteConnectionFactory");
+		
 		this.destination = (Destination) initialContext
 				.lookup("jms/topic/test");
+		
 		this.connection = connectionFactory.createConnection("user", "kolkata");
 		connection.start();
 		this.session = connection

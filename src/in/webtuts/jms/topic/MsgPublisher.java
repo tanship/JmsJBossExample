@@ -24,6 +24,7 @@ public class MsgPublisher {
 	MessageProducer messageProducer;
 
 	public MsgPublisher() throws JMSException, NamingException {
+		
 		Properties properties = new Properties();
 		properties.setProperty(Context.INITIAL_CONTEXT_FACTORY,
 				"org.jboss.naming.remote.client.InitialContextFactory");
@@ -32,11 +33,16 @@ public class MsgPublisher {
 		properties.put(Context.SECURITY_PRINCIPAL, "user");
 		properties.put(Context.SECURITY_CREDENTIALS, "kolkata");
 		InitialContext initialContext = new InitialContext(properties);
+		
+		
 		this.connectionFactory = (ConnectionFactory) initialContext
 				.lookup("jms/RemoteConnectionFactory");
+		
 		this.destination = (Destination) initialContext
 				.lookup("jms/topic/test");
+		
 		this.connection = connectionFactory.createConnection("user", "kolkata");
+		
 		connection.start();
 		this.session = connection
 				.createSession(false, Session.AUTO_ACKNOWLEDGE);

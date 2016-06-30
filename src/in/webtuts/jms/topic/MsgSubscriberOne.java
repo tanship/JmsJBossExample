@@ -36,9 +36,12 @@ public class MsgSubscriberOne {
 		
 		this.connectionFactory = (ConnectionFactory) initialContext
 				.lookup("jms/RemoteConnectionFactory");
+		
 		this.destination = (Destination) initialContext
 				.lookup("jms/topic/test");
+		
 		this.connection = connectionFactory.createConnection("user", "kolkata");
+		
 		connection.start();
 		this.session = connection
 				.createSession(false, Session.AUTO_ACKNOWLEDGE);
